@@ -14,10 +14,11 @@ class Pos
   def move
     @x ||=  @start[0]
     @y ||=  @start[1]
-    @x += rand(-1.0..1.0)
-    @y += rand(-1.0..1.0)
+    @x += (rand(-1..1) * 0.001)
+    @y += (rand(-1..1) * 0.001)
     @file.rewind 
     json = JSON.dump(@id => {latitude: @x, longitude: @y})
+    puts json
     @file.write(json)
     @file.flush
     @file.truncate(@file.pos)
