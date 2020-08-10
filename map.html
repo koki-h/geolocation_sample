@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>Leaflet</title>
+<link rel="stylesheet" href="css/leaflet.css" />
+<script src="js/leaflet.js"></script>
+<script src="js/MovingMarker.js"></script>
+<style type="text/css">
+    #map { height: 768px; width: 1024px}
+</style>
+
+</head>
+
+<body>
+<div id="map" style="width: 1024px; height: 768px"></div>
+<script>
+  function loadMarkerPos(callback) {
+    fetch('/data/a.json', { cache: 'no-cache' })
+      .then(response => response.json())
+      .then(data => callback(data));
+  }
+  
+  var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  });
+  var map = null;
+  var marker = null;
+  var initialized = false;
+
+  setInterval(function(){
+    loadMarkerPos(data => {
+      x = data["a"]["latitude"];
+      y = data["a"]["longitude"]
+      var center=[x,y]; // # [latitude,longitude]
+      if (!initialized) {
+        map = L.map('map').setView(center, 15);
+        marker = L.Marker.movingMarker([center], [], {});
+        marker.bindPopup("マーカーをクリックしました。").addTo(map);
+        initialized = true;
+        map.addLayer(tiles);
+      }
+      marker.moveTo(center, 500);
+      console.log(center);
+    });
+  }, 1000);
+</script>
+
+</body>
+</html>
