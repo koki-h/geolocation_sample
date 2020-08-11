@@ -25,9 +25,13 @@ class Pos
 end
 
 FileUtils.mkdir_p(DATA_DIR)
-pos_a = Pos.new("a")
+positions = (0..100).to_a.map do |id|
+  Pos.new(id)
+end
 
 while(true) do
-  pos_a.move
+  positions.each do |p|
+    p.move
+  end
   sleep(1)
 end
