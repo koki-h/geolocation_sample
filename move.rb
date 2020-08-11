@@ -25,7 +25,7 @@ class Pos
 end
 
 FileUtils.mkdir_p(DATA_DIR)
-positions = (0..100).to_a.map do |id|
+positions = (0..246).to_a.map do |id| #ファイル開きっぱなしは247個が限界
   Pos.new(id)
 end
 
