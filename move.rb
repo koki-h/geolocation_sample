@@ -1,4 +1,3 @@
-require 'FileUtils'
 require 'json'
 
 START=[31.9122178,131.4075771] # [latitude,longitude]
