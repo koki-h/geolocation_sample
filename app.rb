@@ -22,17 +22,17 @@ def load_markers(lat, long)
     longitude: (long - SQUARE_WIDTH_OF_LONGITUDES)..(long + SQUARE_WIDTH_OF_LONGITUDES),
   }
   p marker_area
-  markers = Dir.glob("#{DATA_DIR}/*.json").map do |f|
+  markers = {}
+  Dir.glob("#{DATA_DIR}/*.json").each do |f|
     json = open(f).read
     data = JSON.parse(json)
+    id = data.keys.first
     pos = data.values.first
     p pos
     if (marker_area[:latitude].include?(pos["latitude"])  &&
         marker_area[:longitude].include?(pos["longitude"]))
-      data
+      markers[id] = pos
     end
   end
-  markers.compact!
-  p markers
   JSON.dump(markers)
 end

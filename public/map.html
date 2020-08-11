@@ -13,8 +13,10 @@
 <body>
 <div id="map" style="width: 1024px; height: 768px"></div>
 <script>
+  var center = [31.91, 131.41];
+
   function loadMarkerPos(callback) {
-    fetch('/data/a.json', { cache: 'no-cache' })
+    fetch('/markers?center=' + center.join(','), { cache: 'no-cache' })
       .then(response => response.json())
       .then(data => callback(data));
   }
@@ -23,24 +25,29 @@
     maxZoom: 18,
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
   });
-  var map = null;
+
   var marker = null;
   var initialized = false;
+  var markers = []
+  var last_markers_keys = []
+  var map = L.map('map').setView(center, 15);
+  map.addLayer(tiles);
 
   setInterval(function(){
     loadMarkerPos(data => {
-      x = data["a"]["latitude"];
-      y = data["a"]["longitude"]
-      var center=[x,y]; // # [latitude,longitude]
-      if (!initialized) {
-        map = L.map('map').setView(center, 15);
-        marker = L.Marker.movingMarker([center], [], {});
-        marker.bindPopup("マーカーをクリックしました。").addTo(map);
-        initialized = true;
-        map.addLayer(tiles);
-      }
-      marker.moveTo(center, 500);
-      console.log(center);
+      Object.keys(data).forEach(id => {
+        pos = data[id];
+        console.log(id);
+        console.log(pos);
+        x = pos["latitude"];
+        y = pos["longitude"];
+        if (markers[id] == undefined) {
+          markers[id] = L.Marker.movingMarker([[x, y]], [], {});
+          markers[id].bindPopup(id).addTo(map);
+        } else {
+          markers[id].moveTo([x, y], 500);
+        }
+      });
     });
   }, 1000);
 </script>
