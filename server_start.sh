@@ -1,3 +1,2 @@
 #!/bin/bash
-home=$(pwd)
-docker run -d -p 8080:8080 -v $home:/var/www/html centos/httpd-24-centos7
+docker run -d -p 8080:80 --name geolocation_php -v "$PWD":/var/www/html php:7.2-apache
