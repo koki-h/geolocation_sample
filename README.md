@@ -1,4 +1,4 @@
-こんなことができるサンプルです。
+こんなことができるサンプルです。(画像をクリックするとYoutubeに飛びます)
 
 [![](http://img.youtube.com/vi/vFrjRqD-y2I/0.jpg)](http://www.youtube.com/watch?v=vFrjRqD-y2I "")
 
