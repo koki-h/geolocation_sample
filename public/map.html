@@ -11,6 +11,7 @@
 </head>
 
 <body>
+<div id=marker_count></div>
 <div id="map" style="width: 1024px; height: 768px"></div>
 <script>
   var center = [31.91, 131.41];
@@ -33,13 +34,15 @@
 
   setInterval(function(){
     loadMarkerPos(data => {
+      var count = Object.keys(data).length
+      document.getElementById("marker_count").textContent = "count of markers: " + count;
       Object.keys(data).forEach(id => {
-        pos = data[id];
+        var pos = data[id];
         console.log("----------")
         console.log(id);
         console.log(pos);
-        x = pos["latitude"];
-        y = pos["longitude"];
+        var x = pos["latitude"];
+        var y = pos["longitude"];
         if (markers[id] == undefined) {
           markers[id] = L.Marker.movingMarker([[x, y]], [], {});
           markers[id].bindPopup(id).addTo(map);
@@ -65,6 +68,5 @@
     });
   }, 1000);
 </script>
-
 </body>
 </html>
