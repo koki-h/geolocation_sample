@@ -26,12 +26,12 @@ def load_markers(lat, long)
     begin
       json = open(f).read
       next if json.empty?
-      data = JSON.parse(json)
+      data = JSON.parse(json, symbolize_names: true)
       id = data.keys.first
       pos = data.values.first
       p pos
-      if (marker_area[:latitude].include?(pos["latitude"])  &&
-          marker_area[:longitude].include?(pos["longitude"]))
+      if (marker_area[:latitude].include?(pos[:latitude])  &&
+          marker_area[:longitude].include?(pos[:longitude]))
         markers[id] = pos
       end
     rescue => e
