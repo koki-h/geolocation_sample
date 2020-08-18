@@ -1,7 +1,7 @@
 require 'json'
 
 START = {latitude: 31.9122178, longitude: 131.4075771} # スタート地点
-DATA_DIR = "./public/data"
+DATA_DIR = "./data"
 
 class Pos
   def initialize(id, start = nil)
