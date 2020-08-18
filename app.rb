@@ -2,7 +2,7 @@ require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'json'
 
-DATA_DIR = 'public/data'
+DATA_DIR = 'data'
 SQUARE_WIDTH_OF_LONGITUDES = 0.01 # マーカを表示する、画面中心からの縦横の距離(度)
 
 set :bind, '0.0.0.0'
